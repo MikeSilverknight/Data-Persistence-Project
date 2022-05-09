@@ -16,27 +16,27 @@ public class ScoreMenuUI : MonoBehaviour
     [SerializeField] int Score3;
     int Score4;
     int ScoreTemp;
-    [SerializeField] string Name1 = "AAA";
-    [SerializeField] string Name2 = "BBB";
-    [SerializeField] string Name3 = "CCC";
+    [SerializeField] string Name1;
+    [SerializeField] string Name2;
+    [SerializeField] string Name3;
     string Name4;
     string NameTemp;
 
     // Start is called before the first frame update
     void Start()
     {
+        HighScore1 = GameObject.Find("ScoreText1").GetComponent<Text>();
+        HighScore2 = GameObject.Find("ScoreText2").GetComponent<Text>();
+        HighScore3 = GameObject.Find("ScoreText3").GetComponent<Text>();
+        
         LoadHighScores();
-        
-        HighScore1.text = $"{Score1} : {Name1}";
-        HighScore2.text = $"{Score2} : {Name2}";
-        HighScore3.text = $"{Score3} : {Name3}";
-        
+
         ScoreTemp = DataManager.Instance.HighScore;
         NameTemp = DataManager.Instance.PlayerName;
         
         SortScores();
         
-        StartCoroutine(ReloadScores());
+        ReloadScores();
         
         SaveHighScores();
     }
@@ -47,44 +47,12 @@ public class ScoreMenuUI : MonoBehaviour
 
     }
 
-    public void SortScores()
-    {   
-        if (ScoreTemp > Score1 && ScoreTemp > Score2 && ScoreTemp > Score3)
-        {
-            Score3 = Score4;
-            Name3 = Name4;
-            Score2 = Score3;
-            Name2 = Name3;
-            Score1 = Score2;
-            Name1 = Name2;
-            ScoreTemp = Score1;
-            NameTemp = Name1;
-            Debug.Log($"1st Place! {Score1}");
-        } else if (ScoreTemp > Score2 && ScoreTemp > Score3)
-        {
-            Score3 = Score4;
-            Name3 = Name4;
-            Score2 = Score3;
-            Name2 = Name3;
-            ScoreTemp = Score2;
-            NameTemp = Name2;
-            Debug.Log($"2nd Place! {Score2}");
-        } else if (ScoreTemp > Score3)
-        {
-            Score3 = Score4;
-            Name3 = Name4;
-            ScoreTemp = Score3;
-            NameTemp = Name3;
-            Debug.Log($"3rd Place! {Score3}");
-        }
-    }
-    private IEnumerator ReloadScores()
+    
+    private void ReloadScores()
     {
-        yield return new WaitForSeconds(0.0f);
         HighScore1.text = $"{Score1} : {Name1}";
         HighScore2.text = $"{Score2} : {Name2}";
         HighScore3.text = $"{Score3} : {Name3}";
-
     }
 
     public void ReturnToMenu()
@@ -122,9 +90,54 @@ public class ScoreMenuUI : MonoBehaviour
 
         File.WriteAllText(Application.persistentDataPath + "/savescores.json", json);
     }
+    
+    public void SortScores()
+    {   
+        if (ScoreTemp > Score1 && ScoreTemp > Score2 && ScoreTemp > Score3)
+        {
+            Score3 = Score4;
+            Name3 = Name4;
+            Score2 = Score3;
+            Name2 = Name3;
+            Score1 = Score2;
+            Name1 = Name2;
+            ScoreTemp = Score1;
+            NameTemp = Name1;
+            Debug.Log($"1st Place! {Score1}");
+        } else if (ScoreTemp > Score2 && ScoreTemp > Score3)
+        {
+            Score3 = Score4;
+            Name3 = Name4;
+            Score2 = Score3;
+            Name2 = Name3;
+            ScoreTemp = Score2;
+            NameTemp = Name2;
+            Debug.Log($"2nd Place! {Score2}");
+        } else if (ScoreTemp > Score3)
+        {
+            Score3 = Score4;
+            Name3 = Name4;
+            ScoreTemp = Score3;
+            NameTemp = Name3;
+            Debug.Log($"3rd Place! {Score3}");
+        }
+    }
 
     public void LoadHighScores()
     {
+        if (Name1 == null)
+        {
+            Name1 = "AAA";
+        }
+        if (Name2 == null)
+        {
+            Name2 = "BBB";
+        }
+        if (Name3 == null)
+        {
+            Name3 = "CCC";
+        }   
+        
         string path = Application.persistentDataPath + "/savescores.json";
         if (File.Exists(path))
         {
