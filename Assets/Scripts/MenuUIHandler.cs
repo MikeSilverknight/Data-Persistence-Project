@@ -11,11 +11,6 @@ public class MenuUIHandler : MonoBehaviour
 {
     
     public InputField NameEntry;
-    
-    public void StartNew()
-    {
-        SceneManager.LoadScene(0);
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +22,16 @@ public class MenuUIHandler : MonoBehaviour
     void Update()
     {
     
+    }
+    
+    public void StartNew()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ScoreMenu()
+    {
+        SceneManager.LoadScene(2);
     }
 
     public void AutoCapitalize()
