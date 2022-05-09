@@ -43,7 +43,6 @@ public class DataManager : MonoBehaviour
     class SaveData
     {
         public string PlayerName;
-        public string TempPlayerName;
         public int HighScore;
     }
 

@@ -11,45 +11,80 @@ public class ScoreMenuUI : MonoBehaviour
     public Text HighScore1;
     public Text HighScore2;
     public Text HighScore3;
-    public Text HighScoreTemp;
-    int Score1;
-    int Score2;
-    int Score3;
+    [SerializeField] int Score1;
+    [SerializeField] int Score2;
+    [SerializeField] int Score3;
+    int Score4;
     int ScoreTemp;
-    string Name1;
-    string Name2;
-    string Name3;
+    [SerializeField] string Name1 = "AAA";
+    [SerializeField] string Name2 = "BBB";
+    [SerializeField] string Name3 = "CCC";
+    string Name4;
     string NameTemp;
-    public int[] HighScores;
 
     // Start is called before the first frame update
     void Start()
     {
-        HighScores = new int[4]{Score1, Score2, Score3, ScoreTemp};
+        LoadHighScores();
+        
+        HighScore1.text = $"{Score1} : {Name1}";
+        HighScore2.text = $"{Score2} : {Name2}";
+        HighScore3.text = $"{Score3} : {Name3}";
+        
+        ScoreTemp = DataManager.Instance.HighScore;
+        NameTemp = DataManager.Instance.PlayerName;
         
         SortScores();
         
-        HighScore1.text = "{Score1} : {Name1}";
-        HighScore2.text = "{Score2} : {Name2}";
-        HighScore3.text = "{Score3} : {Name3}";
-        HighScoreTemp.text = $"{DataManager.Instance.HighScore} : {DataManager.Instance.PlayerName}";
+        StartCoroutine(ReloadScores());
         
-        NameTemp = DataManager.Instance.PlayerName;
-        ScoreTemp = DataManager.Instance.HighScore;
-
-        
+        SaveHighScores();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void SortScores()
+    public void SortScores()
     {   
+        if (ScoreTemp > Score1 && ScoreTemp > Score2 && ScoreTemp > Score3)
+        {
+            Score3 = Score4;
+            Name3 = Name4;
+            Score2 = Score3;
+            Name2 = Name3;
+            Score1 = Score2;
+            Name1 = Name2;
+            ScoreTemp = Score1;
+            NameTemp = Name1;
+            Debug.Log($"1st Place! {Score1}");
+        } else if (ScoreTemp > Score2 && ScoreTemp > Score3)
+        {
+            Score3 = Score4;
+            Name3 = Name4;
+            Score2 = Score3;
+            Name2 = Name3;
+            ScoreTemp = Score2;
+            NameTemp = Name2;
+            Debug.Log($"2nd Place! {Score2}");
+        } else if (ScoreTemp > Score3)
+        {
+            Score3 = Score4;
+            Name3 = Name4;
+            ScoreTemp = Score3;
+            NameTemp = Name3;
+            Debug.Log($"3rd Place! {Score3}");
+        }
+    }
+    private IEnumerator ReloadScores()
+    {
+        yield return new WaitForSeconds(0.0f);
+        HighScore1.text = $"{Score1} : {Name1}";
+        HighScore2.text = $"{Score2} : {Name2}";
+        HighScore3.text = $"{Score3} : {Name3}";
 
-        SaveHighScores();
     }
 
     public void ReturnToMenu()
@@ -57,8 +92,13 @@ public class ScoreMenuUI : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
+    }
+
 [System.Serializable]
-    class SaveData
+    public class SaveData
     {
         public int Score1;
         public int Score2;
@@ -81,5 +121,22 @@ public class ScoreMenuUI : MonoBehaviour
         string json = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/savescores.json", json);
+    }
+
+    public void LoadHighScores()
+    {
+        string path = Application.persistentDataPath + "/savescores.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+            Score1 = data.Score1;
+            Score2 = data.Score2;
+            Score3 = data.Score3;
+            Name1 = data.Name1;
+            Name2 = data.Name2;
+            Name3 = data.Name3;
+        }
     }
 }
