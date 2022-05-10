@@ -13,13 +13,6 @@ public class DataManager : MonoBehaviour
     public string PlayerNameTemp;
     public int HighScore;
     public int HighScoreTemp;
-    public int Score1;
-    public int Score2;
-    public int Score3;
-
-    public string Name1;
-    public string Name2;
-    public string Name3;
     
     private void Awake()
     {
