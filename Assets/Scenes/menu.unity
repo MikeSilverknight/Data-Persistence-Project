@@ -707,18 +707,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 417704985}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -898,6 +886,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameEntry: {fileID: 671405750}
+  StartButton: {fileID: 417704985}
+  NameFull: 0
 --- !u!1 &958160136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,7 +1112,7 @@ GameObject:
   - component: {fileID: 1230776950}
   - component: {fileID: 1230776949}
   m_Layer: 0
-  m_Name: EventSystem (1)
+  m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1471,8 +1461,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: 
-  TempPlayerName: 
+  PlayerNameTemp: 
   HighScore: 0
+  HighScoreTemp: 0
 --- !u!1 &1981956135
 GameObject:
   m_ObjectHideFlags: 0

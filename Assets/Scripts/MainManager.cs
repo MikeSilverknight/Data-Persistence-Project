@@ -75,11 +75,12 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        DataManager.Instance.HighScoreTemp = m_Points;
 
         if (m_Points > DataManager.Instance.HighScore)
         {
             DataManager.Instance.HighScore = m_Points;
-            DataManager.Instance.PlayerName = DataManager.Instance.TempPlayerName;
+            DataManager.Instance.PlayerName = DataManager.Instance.PlayerNameTemp;
             DataManager.Instance.SaveHighScore();
         }
     }

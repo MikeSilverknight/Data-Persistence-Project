@@ -11,17 +11,19 @@ public class MenuUIHandler : MonoBehaviour
 {
     
     public InputField NameEntry;
+    public Button StartButton;
+    public bool NameFull;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        NameFull = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-    
+        
     }
     
     public void StartNew()
@@ -41,7 +43,14 @@ public class MenuUIHandler : MonoBehaviour
 
     public void SaveNameTemp()
     {
-        DataManager.Instance.TempPlayerName = NameEntry.text;
+        if (NameEntry.text.Length == 3)
+        {
+            DataManager.Instance.PlayerNameTemp = NameEntry.text;
+            StartButton.interactable = true;
+        } else if (NameEntry.text.Length < 3)
+        {
+            NameFull = false;
+        }
     }
 
     public void ExitGame()
